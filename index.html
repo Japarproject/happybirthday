@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fff0f5; --card:#ffffff; --pink:#ff6fa5; --pink-d:#d63b7a;
+    --pink-l:#ffd1e3; --text:#5a2a3f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Quicksand',sans-serif; color:var(--text);
+    background:linear-gradient(180deg,#fff0f5,#ffd9e8 60%,#ffc2da);
+    min-height:100vh; overflow-x:hidden; text-align:center;
+  }
+  /* kelopak jatuh */
+  .petal{position:fixed;top:-30px;pointer-events:none;z-index:0;opacity:.8;animation:fall linear infinite}
+  @keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+
+  section{position:relative;z-index:1;padding:64px 20px;max-width:760px;margin:0 auto}
+  h1,h2{font-family:'Playfair Display',serif;color:var(--pink-d)}
+  h1{font-size:clamp(2.4rem,9vw,4.2rem);line-height:1.1;margin:10px 0 14px}
+  h2{font-size:clamp(1.6rem,6vw,2.2rem);margin-bottom:24px}
+  .sub{font-size:1.1rem;opacity:.85}
+  .emoji{font-size:3rem}
+
+  .btn{
+    margin-top:28px;border:0;cursor:pointer;font:600 1rem 'Quicksand',sans-serif;
+    background:var(--pink);color:#fff;padding:14px 28px;border-radius:999px;
+    box-shadow:0 8px 20px rgba(255,111,165,.45);transition:transform .2s,background .2s;
+  }
+  .btn:hover{transform:scale(1.05);background:var(--pink-d)}
+  .btn:focus-visible{outline:3px solid var(--pink-d);outline-offset:3px}
+
+  /* surat */
+  .letter{
+    background:var(--card);border-radius:24px;padding:32px 26px;
+    box-shadow:0 12px 30px rgba(214,59,122,.18);border:2px dashed var(--pink-l);
+    text-align:left;line-height:1.8;font-size:1.05rem;
+  }
+  .letter p+p{margin-top:14px}
+  .letter .ttd{text-align:right;font-family:'Playfair Display',serif;font-style:italic;color:var(--pink-d)}
+
+  /* galeri */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+  .photo{
+    background:#fff;padding:10px 10px 14px;border-radius:12px;
+    box-shadow:0 8px 20px rgba(214,59,122,.2);transition:transform .25s;
+  }
+  .photo:nth-child(odd){transform:rotate(-2deg)}
+  .photo:nth-child(even){transform:rotate(2deg)}
+  .photo:hover{transform:rotate(0) scale(1.04)}
+  .photo img{
+    width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block;
+    background:linear-gradient(135deg,#ffd1e3,#ff9ec4);
+  }
+  .photo span{display:block;margin-top:8px;font-size:.9rem}
+
+  /* player */
+  .player-bar{
+    position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:10;
+    display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);
+    background:#fff;border-radius:999px;padding:6px 6px 6px 18px;
+    box-shadow:0 8px 24px rgba(214,59,122,.35);border:2px solid var(--pink-l);
+  }
+  .song{min-width:0;text-align:left;line-height:1.25}
+  .song small{display:block;font-size:.72rem;color:var(--pink-d)}
+  .song b{display:block;font-size:.9rem;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .player{
+    flex:none;width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;font-size:1.3rem;
+    background:var(--pink-d);color:#fff;
+  }
+  .player:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+  .player.on{animation:spin 4s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* kue */
+  .cake{font-size:5rem;cursor:pointer;display:inline-block;user-select:none}
+  .cake:active{transform:scale(.9)}
+  #hint{margin-top:10px;min-height:1.5em}
+
+  footer{position:relative;z-index:1;padding:30px 20px 90px;font-size:.9rem;opacity:.8}
+
+  @media (prefers-reduced-motion:reduce){
+    .petal,.player.on{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ EDIT BAGIAN INI ============ -->
+<!-- Ganti NAMA, ucapan, foto (foto1.jpg dst), dan lagu (lagu.mp3) -->
+
+<audio id="audio" loop preload="auto">
+  <source src="kasihputih.mp3" type="audio/mpeg">
+</audio>
+<div class="player-bar">
+  <div class="song">
+    <small id="songState">Ketuk untuk putar lagu</small>
+    <b id="songTitle">Kasih Putih - Glenn Fredly</b>
+  </div>
+  <button class="player" id="player" aria-label="Putar atau jeda musik" title="Putar musik">▶</button>
+</div>
+
+<section id="hero">
+  <div class="emoji">🎀</div>
+  <p class="sub">Hari ini hari spesial seseorang…</p>
+  <h1>Selamat Ulang Tahun,<br>MANDA 🎂</h1>
+  <p class="sub">Semoga semua hal baik datang ke hidupmu.</p>
+  <button class="btn" id="openBtn">Buka ucapannya 💌</button>
+</section>
+
+<section id="isi" hidden>
+  <h2>for youu 💗</h2>
+  <div class="letter">
+    <p>Hai, Manda.</p>
+    <p>Selamat ulang tahun yaa. Semoga di umur yang baru ini kamu selalu sehat, bahagia, dan dikelilingi orang-orang yang tulus sayang sama kamu.</p>
+    <p>makasih udah pernah jadi bagian dari hidup aku dan untuk semua kenangan yang pernah kita lewati. apapun yang akan terjadi, aku tetep berharap yang terbaik untuk kamu : raih cita-cita apa yang kamu pernah bilang ke aku, dilancarkan rezekinya, dan hati yang selalu tenang.</p>
+    <p>make a wish!!! Semoga segala doa dan harapan kamu terkabul ditahun ini aamiin...</p>
+    <p>maaf ya belum bisa kasih hadiah yang istimewa, semoga hadiah dari aku bermanfaat buat kamu kedepannya</p>
+    <p>i loved u</p>
+    <p class="ttd">— fajar</p>
+  </div>
+</section>
+
+<section id="galeri" hidden>
+  <h2>about manda </h2>
+  <div class="gallery">
+    <figure class="photo"><img src="foto3.jpeg" alt="Foto 3" loading="lazy"><span>Manda kecil</span></figure>
+    <figure class="photo"><img src="foto7.jpeg" alt="Foto 7" loading="lazy"><span>First Meet</span></figure>
+    <figure class="photo"><img src="foto1.jpeg" alt="Foto 1" loading="lazy"><span>So Pretty</span></figure>
+    <figure class="photo"><img src="foto4.jpeg" alt="Foto 4" loading="lazy"><span>Playstation Meet</span></figure>
+    <figure class="photo"><img src="foto5.jpeg" alt="Foto 5" loading="lazy"><span>Cafung Time WKWK</span></figure>
+    <figure class="photo"><img src="foto6.jpeg" alt="Foto 6" loading="lazy"><span>Masyallah</span></figure>
+</section>
+
+<section id="kue" hidden>
+  <h2>Tiup lilinnya 🕯️</h2>
+  <div class="cake" id="cake" role="button" tabindex="0" aria-label="Tiup lilin">🎂</div>
+  <p id="hint">Klik kuenya!</p>
+</section>
+
+<footer>Dibuat dengan 💗 untuk hari spesialmu</footer>
+
+<script>
+  // kelopak jatuh
+  const icons=['🌸','💗','🎀','✨'];
+  for(let i=0;i<16;i++){
+    const p=document.createElement('div');
+    p.className='petal';
+    p.textContent=icons[i%icons.length];
+    p.style.left=Math.random()*100+'vw';
+    p.style.fontSize=(14+Math.random()*16)+'px';
+    p.style.animationDuration=(8+Math.random()*10)+'s';
+    p.style.animationDelay=(-Math.random()*12)+'s';
+    document.body.appendChild(p);
+  }
+
+  // musik
+  const audio=document.getElementById('audio'), player=document.getElementById('player');
+  const songState=document.getElementById('songState');
+  function setState(playing){
+    player.textContent=playing?'⏸':'▶';
+    songState.textContent=playing?'Sedang diputar 🎶':'Dijeda · ketuk untuk putar';
+  }
+  function toggleMusic(){
+    if(audio.paused){
+      audio.play().then(()=>setState(true)).catch(()=>{songState.textContent='Lagu belum tersedia'});
+    }else{audio.pause();setState(false)}
+  }
+  player.addEventListener('click',toggleMusic);
+
+  // buka ucapan
+  document.getElementById('openBtn').addEventListener('click',()=>{
+    ['isi','galeri','kue'].forEach(id=>document.getElementById(id).hidden=false);
+    if(audio.paused) toggleMusic();
+    document.getElementById('isi').scrollIntoView({behavior:'smooth'});
+  });
+
+  // tiup lilin
+  const cake=document.getElementById('cake'), hint=document.getElementById('hint');
+  let blown=false;
+  function blow(){
+    blown=!blown;
+    cake.textContent=blown?'🎂':'🎂';
+    hint.textContent=blown?'Semoga semua harapanmu terkabul! 🎉💗':'Klik kuenya!';
+    if(blown) confetti();
+  }
+  cake.addEventListener('click',blow);
+  cake.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')blow()});
+
+  function confetti(){
+    for(let i=0;i<40;i++){
+      const c=document.createElement('div');
+      c.textContent=['💖','🎉','🌸','✨'][i%4];
+      c.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-20px;font-size:${16+Math.random()*16}px;z-index:20;pointer-events:none;transition:transform 2.5s ease-in,opacity 2.5s`;
+      document.body.appendChild(c);
+      requestAnimationFrame(()=>{
+        c.style.transform=`translateY(105vh) rotate(${Math.random()*720}deg)`;
+        c.style.opacity='.2';
+      });
+      setTimeout(()=>c.remove(),2600);
+    }
+  }
+</script>
+</body>
+</html>
